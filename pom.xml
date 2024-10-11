@@ -146,6 +146,15 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+    <!-- JFR -->
+    <!--
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-jfr</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    -->
+
   </dependencies>
 
   <build>
