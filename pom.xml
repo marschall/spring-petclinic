@@ -156,6 +156,14 @@
       <artifactId>testcontainers-mysql</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- JFR -->
+    <!--
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-jfr</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    -->
   </dependencies>
 
   <build>
