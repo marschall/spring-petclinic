@@ -9,9 +9,11 @@ set -e
 docker container run \
   --name jvm-workshop-petclinic \
   --rm -it \
-  --mount type=bind,src=./target/spring-petclinic-4.0.0-SNAPSHOT.jar,dst=/opt/spring-petclinic.jar,readonly \
+  --mount type=bind,src=./target/extracted,dst=/opt/spring-petclinic,readonly \
   --mount type=bind,src=./profiling-plus-tlab.jfc,dst=/opt/profiling-plus-tlab.jfc,readonly \
   --mount type=bind,src=./docker/logs,dst=/var/log/spring-petclinic \
+  --mount type=bind,src=./docker/hsdis/hsdis-aarch64.so,dst=/usr/lib/jvm/java-25/lib/server/hsdis-aarch64.so,readonly \
+  --mount type=bind,src=./docker/hsdis/hsdis-amd64.so,dst=/usr/lib/jvm/java-25/lib/server/hsdis-amd64.so,readonly \
   -w /opt/spring-petclinic \
   --cpus 2 \
   --memory 1GB \
@@ -24,6 +26,9 @@ docker container run \
   java \
   -Xms64m -Xmx512m \
   -XX:+UseSerialGC \
+  -XX:+UseCompactObjectHeaders \
+  -XX:+HeapDumpOnOutOfMemoryError \
+  -XX:HeapDumpPath=/var/log/spring-petclinic \
   -XX:FlightRecorderOptions=stackdepth=256 \
   -XX:StartFlightRecording:maxsize=10m,filename=/var/log/spring-petclinic/petclinic-profile.jfr,settings=/opt/profiling-plus-tlab.jfc,dumponexit=true \
   -Xlog:jfr+startup=error \

@@ -4,8 +4,8 @@ set -e
 set -u
 
 ${JAVA_HOME}/bin/java -Xms64m -Xmx512m \
-  -XX:+UseSerialGC \
+  -XX:+UseZGC \
   -XX:+UseCompactObjectHeaders \
-  -XX:+HeapDumpOnOutOfMemoryError \
-  -XX:HeapDumpPath=./local/logs \
+  -XX:ZUncommitDelay=5 \
+  -XX:NativeMemoryTracking=summary \
   -jar target/extracted/*.jar
