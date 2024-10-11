@@ -3,8 +3,9 @@
 set -e
 set -u
 
-java -Xmx512m \
+java -Xms64m -Xmx512m \
   -XX:+UseSerialGC \
+  -XX:NativeMemoryTracking=summary \
   -XX:+UnlockDiagnosticVMOptions \
   -XX:+DebugNonSafepoints \
   -XX:FlightRecorderOptions=stackdepth=256 \
