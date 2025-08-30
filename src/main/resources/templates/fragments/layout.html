@@ -59,6 +59,11 @@
             <span th:text="#{error}">Error</span>
           </li>
 
+          <li th:replace="~{::menuItem ('/problems.html','problems','list problems','exclamation-triangle',#{problems})}">
+            <span class="fa a-th-list" aria-hidden="true"></span>
+            <span th:text="#{problems}">Problems</span>
+          </li>
+
         </ul>
       </div>
     </div>
