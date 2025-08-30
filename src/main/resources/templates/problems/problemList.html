@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'problems')}">
+
+<body>
+
+  <h2 th:text="#{problems}">Problems</h2>
+
+  <ul>
+    <li><a th:text="#{crash(1)}" th:href="@{'/problems/crash1'}">Crash 1</a>
+    <li><a th:text="#{crash(2)}" th:href="@{'/problems/crash2'}">Crash 2</a>
+    <li><a th:text="#{crash(3)}" th:href="@{'/problems/crash3'}">Crash 3</a>
+    <li><a th:text="#{problem(1)}" th:href="@{'/problems/problem1'}">Problem 1</a>
+    <li><a th:text="#{problem(1)}" th:href="@{'/problems/problem2'}">Problem 2</a>
+  </ul>
+</body>
+
+</html>
