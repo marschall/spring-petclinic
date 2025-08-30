@@ -15,16 +15,17 @@
  */
 package org.springframework.samples.petclinic.system;
 
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import java.lang.invoke.MethodHandles;
 import java.nio.ByteBuffer;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.config.RepositoryConfigurationDelegate;
+import org.springframework.samples.petclinic.ffi.Mman;
+import org.springframework.samples.petclinic.ffi.Unistd;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +68,34 @@ class CrashController {
 
 	@GetMapping("/crash3")
 	public String crash3() {
-		return "crash3";
+		List<MemorySegment> segments = new ArrayList<>();
+		MemorySegment segment = requestMemory();
+		MemorySegment failed = MemorySegment.ofAddress(-1L);
+		while (!segment.equals(failed)) {
+			segments.add(segment);
+			segment = requestMemory();
+		}
+		touchPages(segments);
+		return segments.toString();
+	}
+
+	private static void touchPages(List<MemorySegment> segments) {
+		int pageSize = Unistd.getpagesize();
+		for (MemorySegment each : segments) {
+			// touch the pages
+			for (long i = 0; i < each.byteSize(); i += pageSize) {
+				each.setAtIndex(ValueLayout.JAVA_BYTE, i, (byte) 1);
+			}
+		}
+	}
+
+	private static MemorySegment requestMemory() {
+		// request multiple pages
+		long len = Unistd.getpagesize() * 1024 * 1024; // 4 GB on Linux, 16 GB on macOS
+		int prot = Mman.PROT_READ() | Mman.PROT_WRITE();
+		int flags = Mman.MAP_ANON() | Mman.MAP_ANON();
+		MemorySegment segment = Mman.mmap(MemorySegment.NULL, len, prot, flags, -1, 0);
+		return segment;
 	}
 
 	@ExceptionHandler(OutOfMemoryError.class)
