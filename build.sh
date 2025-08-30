@@ -13,9 +13,9 @@ if [ ! -f docker/hsdis/hsdis-amd64.so ]; then
     curl --fail -o docker/hsdis/hsdis-amd64.so --get "https://builds.shipilev.net/hsdis-custombuilt/hsdis-amd64.so"
 fi
 
-#${JAVA_HOME}/bin/java \
-#  -Xmx512m \
-#  -XX:+UseSerialGC \
-#  -Djarmode=tools \
-#  -jar target/*.jar extract \
-#  --destination target/extracted
+${JAVA_HOME}/bin/java \
+  -Xmx512m \
+  -XX:+UseSerialGC \
+  -Djarmode=tools \
+  -jar target/*.jar extract \
+  --destination target/extracted
