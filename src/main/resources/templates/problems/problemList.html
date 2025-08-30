@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'problems')}">
+
+<body>
+
+  <h2 th:text="#{problems}">Problems</h2>
+
+  <ul>
+    <li><a th:text="#{crash(1)}" th:href="@{'/problems/crash1'}">Crash 1</a>
+    <li><a th:text="#{crash(2)}" th:href="@{'/problems/crash2'}">Crash 2</a>
+    <li><a th:text="#{crash(3)}" th:href="@{'/problems/crash3'}">Crash 3</a>
+    <li><a th:text="#{crash(4)}" th:href="@{'/problems/crash4'}">Crash 4</a>
+    <li><a th:text="#{crash(5)}" th:href="@{'/problems/crash5'}">Crash 5</a>
+    <li><a th:text="#{problem(1)}" th:href="@{'/problems/problem1'}">Problem 1</a>
+    <li><a th:text="#{problem(2)}" th:href="@{'/problems/problem2'}">Problem 2</a>
+    <li><a th:text="#{problem(3)}" th:href="@{'/problems/problem3'}">Problem 3</a>
+    <li><a th:text="#{problem(4)}" th:href="@{'/problems/problem4'}">Problem 4</a>
+    <li><a th:text="#{problem(5)}" th:href="@{'/problems/problem5'}">Problem 5</a>
+    <li><a th:text="#{problem(6)}" th:href="@{'/problems/problem6'}">Problem 6</a>
+    <li><a th:text="#{problem(7)}" th:href="@{'/problems/problem7'}">Problem 7</a>
+    <li><a th:text="#{problem(9)}" th:href="@{'/problems/problem9'}">Problem 9</a>
+    <li><a th:text="#{problem(10)}" th:href="@{'/problems/problem10'}">Problem 10</a>
+    <li><a th:text="#{problem(11)}" th:href="@{'/problems/problem11'}">Problem 11</a>
+    <li><a th:text="#{problem(12)}" th:href="@{'/problems/problem12'}">Problem 12</a>
+    <li><a th:text="#{problem(13)}" th:href="@{'/problems/problem13'}">Problem 13</a>
+    <li><a th:text="#{problem(14)}" th:href="@{'/owners?lastName=Davis'}">Problem 14</a>
+  </ul>
+</body>
+
+</html>
