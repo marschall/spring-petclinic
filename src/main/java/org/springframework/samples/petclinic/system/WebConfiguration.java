@@ -1,14 +1,17 @@
 package org.springframework.samples.petclinic.system;
 
+import java.util.Locale;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import java.util.Locale;
+import com.github.marschall.problematic.service.ProblematicConfiguration;
 
 /**
  * Configures internationalization (i18n) support for the application.
@@ -22,6 +25,7 @@ import java.util.Locale;
  */
 @Configuration
 @SuppressWarnings("unused")
+@Import(ProblematicConfiguration.class)
 public class WebConfiguration implements WebMvcConfigurer {
 
 	/**

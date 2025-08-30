@@ -13,7 +13,7 @@
 
   <properties>
     <!-- Generic properties -->
-    <java.version>17</java.version>
+    <java.version>25</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Important for reproducible builds. Update using e.g. ./mvnw versions:set -DnewVersion=... -->
@@ -156,6 +156,11 @@
       <artifactId>testcontainers-mysql</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.marschall</groupId>
+      <artifactId>problematic</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -229,6 +234,16 @@
       <plugin>
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Enable-Native-Access>ALL-UNNAMED</Enable-Native-Access>
+            </manifestEntries>
+          </archive>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
