@@ -9,3 +9,4 @@ ${JAVA_HOME}/bin/java \
   -XX:StartFlightRecording:filename=classloading-boot.jfr,dumponexit=true,settings=src/main/jfr/Classloading-only.jfc \
   -jar target/*.jar
 
+#${JAVA_HOME}/bin/jfr view --verbose class-loaders classloading-extracted.jfr
