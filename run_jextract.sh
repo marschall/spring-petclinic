@@ -10,6 +10,7 @@ ${JEXTRACT_HOME}/bin/jextract \
   --target-package org.springframework.samples.petclinic.ffi \
   --header-class-name Mman \
   --include-function mmap \
+  --include-function munmap \
   --include-constant PROT_READ \
   --include-constant PROT_WRITE \
   --include-constant MAP_ANON \

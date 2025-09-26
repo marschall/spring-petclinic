@@ -166,6 +166,60 @@ public class Mman {
 		}
 	}
 
+	private static class munmap {
+
+		public static final FunctionDescriptor DESC = FunctionDescriptor.of(Mman.C_INT, Mman.C_POINTER, Mman.C_LONG);
+
+		public static final MemorySegment ADDR = Mman.findOrThrow("munmap");
+
+		public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+
+	}
+
+	/**
+	 * Function descriptor for:
+	 * {@snippet lang = c : * extern int munmap(void *__addr, size_t __len)
+	 * }
+	 */
+	public static FunctionDescriptor munmap$descriptor() {
+		return munmap.DESC;
+	}
+
+	/**
+	 * Downcall method handle for:
+	 * {@snippet lang = c : * extern int munmap(void *__addr, size_t __len)
+	 * }
+	 */
+	public static MethodHandle munmap$handle() {
+		return munmap.HANDLE;
+	}
+
+	/**
+	 * Address for:
+	 * {@snippet lang = c : * extern int munmap(void *__addr, size_t __len)
+	 * }
+	 */
+	public static MemorySegment munmap$address() {
+		return munmap.ADDR;
+	}
+
+	/**
+	 * {@snippet lang = c : * extern int munmap(void *__addr, size_t __len)
+	 * }
+	 */
+	public static int munmap(MemorySegment __addr, long __len) {
+		var mh$ = munmap.HANDLE;
+		try {
+			if (TRACE_DOWNCALLS) {
+				traceDowncall("munmap", __addr, __len);
+			}
+			return (int) mh$.invokeExact(__addr, __len);
+		}
+		catch (Throwable ex$) {
+			throw new AssertionError("should not reach here", ex$);
+		}
+	}
+
 	private static final int MAP_ANON = (int) 32L;
 
 	/**
