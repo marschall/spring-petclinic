@@ -3,7 +3,7 @@
 set -e
 set -u
 
-java -Xms64m -Xmx512m \
+${JAVA_HOME}/bin/java -Xms64m -Xmx512m \
   -XX:+UseZGC \
   -XX:+ZGenerational \
   -XX:ZUncommitDelay=5 \
