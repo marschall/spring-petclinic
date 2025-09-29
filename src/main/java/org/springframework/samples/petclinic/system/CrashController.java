@@ -17,8 +17,8 @@ package org.springframework.samples.petclinic.system;
 
 import java.lang.invoke.MethodHandles;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,10 +34,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 class CrashController {
 
-	private static final Log LOG = LogFactory.getLog(MethodHandles.lookup().lookupClass());
+	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Autowired
 	private CrashService crashService;
+
+	@Autowired
+	private ProblemService problemService;
 
 	@GetMapping("/oups")
 	public String triggerException() {
@@ -58,6 +61,16 @@ class CrashController {
 	@GetMapping("/crash3")
 	public String crash3() {
 		return crashService.crash3();
+	}
+
+	@GetMapping("/problem1")
+	public String problem1() {
+		return Integer.toString(System.identityHashCode(this.problemService.problem1()));
+	}
+
+	@GetMapping("/problem2")
+	public String problem2() {
+		return Integer.toString(System.identityHashCode(this.problemService.problem2()));
 	}
 
 	@ExceptionHandler(OutOfMemoryError.class)
