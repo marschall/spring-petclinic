@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller used to showcase what happens when an exception is thrown
@@ -50,33 +51,41 @@ class CrashController {
 
 	@GetMapping("/crash1")
 	public String crash1() {
-		return crashService.crash1();
+		LOG.debug("crash 1 {}", System.identityHashCode(crashService.crash1()));
+		return "error";
 	}
 
 	@GetMapping("/crash2")
 	public String crash2() {
-		return crashService.crash2();
+		LOG.debug("crash 2 {}", System.identityHashCode(crashService.crash2()));
+		return "error";
 	}
 
 	@GetMapping("/crash3")
 	public String crash3() {
-		return crashService.crash3();
+		LOG.debug("crash 3 {}", System.identityHashCode(crashService.crash3()));
+		return "error";
 	}
 
 	@GetMapping("/problem1")
 	public String problem1() {
-		return Integer.toString(System.identityHashCode(this.problemService.problem1()));
+		LOG.debug("problem 1 {}", System.identityHashCode(this.problemService.problem1()));
+		return "error";
 	}
 
 	@GetMapping("/problem2")
 	public String problem2() {
-		return Integer.toString(System.identityHashCode(this.problemService.problem2()));
+		LOG.debug("problem 2 {}", System.identityHashCode(this.problemService.problem2()));
+		return "error";
 	}
 
 	@ExceptionHandler(OutOfMemoryError.class)
-	public String outOfMemoryError(OutOfMemoryError e) {
+	public ModelAndView outOfMemoryError(OutOfMemoryError e) {
 		LOG.warn("OutOfMemory", e);
-		return "error";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("exception", e);
+		mav.setViewName("error");
+		return mav;
 	}
 
 }

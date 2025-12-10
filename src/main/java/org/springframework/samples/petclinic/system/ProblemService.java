@@ -10,6 +10,8 @@ import java.lang.classfile.constantpool.ConstantPoolBuilder;
 import java.lang.constant.ClassDesc;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.AccessFlag;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -189,6 +191,16 @@ class ProblemService {
 			new ObjectMapper().writeValue(writer, map);
 		}
 		return "OK";
+	}
+	
+	Object problem11() throws IOException {
+		// Too many exceptions
+		boolean isSymlink = true;
+		Path p = Path.of("/typo");
+		for (int i = 0; i < 1024; i++) {
+			isSymlink &= Files.isSymbolicLink(p);
+		}
+		return isSymlink ? "failed" : "OK";
 	}
 
 }
