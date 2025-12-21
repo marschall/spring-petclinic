@@ -3,14 +3,18 @@
 set -u
 set -e
 
+# /etc/opt: application's configuration files
+# /var/opt: application's data.
+
 docker container run \
   --name jvm-workshop-petclinic \
   --rm -it \
   --mount type=bind,src=./target/spring-petclinic-4.0.0-SNAPSHOT.jar,dst=/opt/spring-petclinic.jar,readonly \
-  -w /opt \
+  --mount type=bind,src=./profiling-plus-tlab.jfc,dst=/opt/profiling-plus-tlab.jfc,readonly \
+  --mount type=bind,src=./docker/logs,dst=/var/log/spring-petclinic \
+  -w /opt/spring-petclinic \
   --cpus 2 \
   --memory 1GB \
-  --memory-swap 1GB \
   --health-cmd 'curl --fail --head http://127.0.0.1:8080/actuator/health/liveness' \
   --health-start-period 1s \
   --health-start-interval 1s \
@@ -20,5 +24,10 @@ docker container run \
   java \
   -Xms64m -Xmx512m \
   -XX:+UseSerialGC \
+  -XX:FlightRecorderOptions=stackdepth=256 \
+  -XX:StartFlightRecording:maxsize=10m,filename=/var/log/spring-petclinic/petclinic-profile.jfr,settings=/opt/profiling-plus-tlab.jfc,dumponexit=true \
+  -Xlog:jfr+startup=error \
+  -Xlog:gc*,safepoint:/var/log/spring-petclinic/petclinic-gc.log::filecount=10,filesize=100M \
   -Dspring.profiles.active=docker \
   -jar /opt/spring-petclinic-4.0.0-SNAPSHOT.jar
+

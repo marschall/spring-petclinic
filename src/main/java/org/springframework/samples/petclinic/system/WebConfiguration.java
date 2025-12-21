@@ -5,6 +5,7 @@ import java.util.Locale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.samples.petclinic.servlet.JfrRepositoryConfiguration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -25,7 +26,7 @@ import com.github.marschall.problematic.service.ProblematicConfiguration;
  */
 @Configuration
 @SuppressWarnings("unused")
-@Import(ProblematicConfiguration.class)
+@Import({ ProblematicConfiguration.class, JfrRepositoryConfiguration.class })
 public class WebConfiguration implements WebMvcConfigurer {
 
 	/**
