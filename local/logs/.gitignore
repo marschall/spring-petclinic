@@ -1,0 +1,9 @@
+# GC Log
+*.log
+*.log.*
+# Flight Recording
+*.jfr
+# Eclipse MAT
+*.hprof
+*.index
+*.threads
